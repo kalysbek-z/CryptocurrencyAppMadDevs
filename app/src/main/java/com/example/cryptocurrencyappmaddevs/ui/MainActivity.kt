@@ -1,11 +1,15 @@
 package com.example.cryptocurrencyappmaddevs.ui
 
+import android.content.Context
+import android.content.DialogInterface
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptocurrencyappmaddevs.*
@@ -27,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (!isConnected(this)) {
+            showAlertDialog()
+        }
+
         initRecyclerView()
 
         viewModel.currencies.observe(this) {
@@ -44,9 +52,32 @@ class MainActivity : AppCompatActivity() {
                 filterData(s.toString())
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
             }
         })
+    }
+
+    private fun showAlertDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Нет подключения к интернету")
+        builder.setMessage("Проверьте подключение к интернет-связи")
+        builder.setPositiveButton(R.string.ok) { dialogInterface: DialogInterface, i: Int ->
+        }
+        builder.show()
+    }
+
+    private fun isConnected(mainActivity: MainActivity): Boolean {
+        val connectivityManager =
+            mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+        val mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+
+        return (wifiConn != null && wifiConn.isConnected) || (mobileConn != null && mobileConn.isConnected)
     }
 
     private fun filterData(query: String) {

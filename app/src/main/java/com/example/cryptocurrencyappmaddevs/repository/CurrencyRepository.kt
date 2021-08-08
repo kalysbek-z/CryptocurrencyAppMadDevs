@@ -1,7 +1,8 @@
-package com.example.cryptocurrencyappmaddevs.data
+package com.example.cryptocurrencyappmaddevs.repository
 
 import androidx.room.withTransaction
 import com.example.cryptocurrencyappmaddevs.api.ServiceAPI
+import com.example.cryptocurrencyappmaddevs.data.CurrencyDatabase
 import com.example.cryptocurrencyappmaddevs.utils.ConstValues
 import com.example.cryptocurrencyappmaddevs.utils.networkBoundResource
 import javax.inject.Inject

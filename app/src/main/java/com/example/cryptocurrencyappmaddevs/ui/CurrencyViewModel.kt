@@ -1,12 +1,8 @@
 package com.example.cryptocurrencyappmaddevs.ui
 
 import androidx.lifecycle.*
-import com.example.cryptocurrencyappmaddevs.api.ServiceAPI
-import com.example.cryptocurrencyappmaddevs.data.CurrencyItem
-import com.example.cryptocurrencyappmaddevs.data.CurrencyRepository
-import com.example.cryptocurrencyappmaddevs.utils.ConstValues
+import com.example.cryptocurrencyappmaddevs.repository.CurrencyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
