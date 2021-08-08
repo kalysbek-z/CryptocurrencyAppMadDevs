@@ -1,4 +1,4 @@
-package com.example.cryptocurrencyappmaddevs
+package com.example.cryptocurrencyappmaddevs.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cryptocurrencyappmaddevs.data.CurrencyItem
+import com.example.cryptocurrencyappmaddevs.R
 import kotlinx.android.synthetic.main.currency_item.view.*
 import java.util.*
 
@@ -16,7 +18,7 @@ class CryptoCurrenciesAdapter(
 ) :
     RecyclerView.Adapter<CryptoCurrenciesAdapter.CryptoCurrenciesViewHolder>() {
 
-    private var list: MutableList<CurrencyItem> = ArrayList()
+    private var list: List<CurrencyItem>? = ArrayList()
 
     inner class CryptoCurrenciesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val logo: ImageView = itemView.currency_logo_iv
@@ -32,27 +34,29 @@ class CryptoCurrenciesAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list?.size!!
     }
 
     override fun onBindViewHolder(holder: CryptoCurrenciesViewHolder, position: Int) {
-        val currentItem = list[position]
+        val currentItem = list?.get(position)
 
-        Glide.with(context)
-            .load(currentItem.logo)
-            .centerCrop()
-            .dontTransform()
-            .into(holder.logo) 
-        // Glide throws exceptions because some images from server are .svg extension
-        // I can implement some svg decoder library but i will not do it
+        if (currentItem != null) {
+            Glide.with(context)
+                .load(currentItem.logo)
+                .centerCrop()
+                .dontTransform()
+                .into(holder.logo)
+            // Glide throws exceptions because some images from server are .svg extension
+            // I can implement some svg decoder library but i will not do it
 
-        holder.name.text = currentItem.name
-        holder.tag.text = currentItem.tag
-        holder.price.text =
-            java.lang.String.format("%.2f", currentItem.price) // format Double to String
+            holder.name.text = currentItem.name
+            holder.tag.text = currentItem.tag
+            holder.price.text =
+                java.lang.String.format("%.2f", currentItem.price) // format Double to String
+        }
     }
 
-    fun setData(data: MutableList<CurrencyItem>) {
+    fun setData(data: List<CurrencyItem>?) {
         this.list = data
         notifyDataSetChanged()
     }

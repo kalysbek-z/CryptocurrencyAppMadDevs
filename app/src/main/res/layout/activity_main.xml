@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <EditText
         android:id="@+id/search_et"
@@ -18,9 +18,9 @@
         android:drawablePadding="4dp"
         android:fontFamily="sans-serif-condensed"
         android:hint="Search..."
+        android:inputType="textFilter"
         android:padding="12dp"
         android:textColor="#d3d3d3"
-        android:inputType="textFilter"
         android:textColorHint="#878787"
         android:textSize="16sp" />
 
@@ -32,6 +32,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
+        android:clipToPadding="false"
         tools:listitem="@layout/currency_item" />
 
     <ProgressBar
